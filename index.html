@@ -1,269 +1,486 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Rialo — Real-World Assets (RWAs) Demo</title>
-  <meta name="description" content="Rialo Makes Real-World Assets Real — article summary and 6 quizzes with answers. Perfect for GitHub Pages." />
-  <style>
-    :root{--bg:#0f1724;--card:#0b1220;--muted:#94a3b8;--accent:#7c3aed;--glass: rgba(255,255,255,0.04);}    
-    *{box-sizing:border-box}
-    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;margin:0;background:linear-gradient(180deg,#071024 0%, #07162a 100%);color:#e6eef8;line-height:1.5}
-    .container{max-width:980px;margin:36px auto;padding:24px}
-    header{display:flex;align-items:center;gap:16px}
-    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#3b82f6);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;box-shadow:0 6px 18px rgba(0,0,0,0.6)}
-    h1{font-size:20px;margin:0}
-    p.lead{color:var(--muted);margin-top:8px}
-
-    .card{background:var(--card);padding:18px;border-radius:12px;margin-top:18px;box-shadow:0 6px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
-    .grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
-
-    .article h2{margin-top:0}
-    ul.features{padding-left:18px;color:var(--muted)}
-
-    .quiz-list{display:grid;gap:12px}
-    .quiz{border-radius:10px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border:1px solid rgba(255,255,255,0.02)}
-    .q{font-weight:600}
-    .choices{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px}
-    .choice{background:var(--glass);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:default}
-    .answer{margin-top:10px;display:none;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);color:#cfe9ff}
-    .controls{display:flex;gap:8px;flex-wrap:wrap}
-    button{background:var(--accent);border:0;padding:8px 12px;border-radius:8px;color:white;cursor:pointer;font-weight:600}
-    button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06)}
-    footer{margin-top:18px;color:var(--muted);font-size:13px}
-
-    /* small helpers */
-    .muted{color:var(--muted)}
-    .small{font-size:13px}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.02)}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rialo Makes Real World Assets Real Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #e8e3d5;
+            color: #010101;
+        }
+        h1 {
+            text-align: center;
+            color: #010101;
+        }
+        .disclaimer {
+            background-color: #a9ddd3;
+            border: 1px solid #a9ddd3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+            font-style: italic;
+        }
+        .quiz-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(1,1,1,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-left: 4px solid #a9ddd3;
+        }
+        .question h3 {
+            margin-top: 0;
+            color: #010101;
+        }
+        .question p {
+            margin-bottom: 10px;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 8px;
+            padding: 10px;
+            border: 1px solid #a9ddd3;
+            border-radius: 5px;
+            background-color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .options li:hover:not(.revealed) {
+            background-color: #a9ddd3;
+        }
+        .options li.revealed {
+            cursor: default;
+        }
+        .options li label {
+            display: block;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+        }
+        .options li input[type="radio"] {
+            margin-right: 10px;
+            accent-color: #a9ddd3;
+            cursor: pointer;
+        }
+        .options li input[type="radio"]:disabled {
+            accent-color: #ccc;
+            cursor: not-allowed;
+        }
+        .options li.correct {
+            background-color: #d4edda !important;
+            border-color: #28a745;
+        }
+        .options li.correct label {
+            font-weight: bold;
+        }
+        .options li.selected-correct {
+            background-color: #c3e6cb !important;
+            border-color: #28a745;
+        }
+        .options li.selected-wrong {
+            background-color: #f8d7da !important;
+            border-color: #dc3545;
+        }
+        .indicator {
+            font-weight: bold;
+            margin-left: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        .indicator.correct {
+            background-color: #28a745;
+            color: white;
+        }
+        .indicator.incorrect {
+            background-color: #dc3545;
+            color: white;
+        }
+        button {
+            background-color: #a9ddd3;
+            color: #010101;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+        }
+        button:hover:not(.submitted) {
+            background-color: #88c7bf;
+        }
+        button.submitted {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .score {
+            display: none;
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #a9ddd3;
+            border: 1px solid #a9ddd3;
+            border-radius: 5px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #010101;
+        }
+        .score .obtained {
+            font-size: 18px;
+            color: #28a745;
+        }
+        .score .total {
+            font-size: 18px;
+            color: #010101;
+        }
+        .score .grade {
+            font-size: 24px;
+            color: #dc3545;
+            margin-top: 5px;
+        }
+        .results {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #a9ddd3;
+            border: 1px solid #a9ddd3;
+            border-radius: 5px;
+        }
+        .feedback h4 {
+            color: #010101;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="logo">R</div>
-      <div>
-        <h1>Rialo — Real-World Assets (RWAs) Demo</h1>
-        <p class="lead">Article: <em>Rialo Makes Real-World Assets Real</em> • Quick summary + 6 interactive quizzes (answers hidden by default) — ready for GitHub Pages.</p>
-      </div>
-    </header>
-
-    <div class="grid">
-      <main class="article">
-        <div class="card">
-          <h2>At-a-glance summary</h2>
-          <p class="muted small">Rialo aims to make tokenized real-world assets truly "living" by connecting on-chain programs to verifiable, live off-chain data, enabling instant automation, privacy-compliant identity, and sub-second settlement for RWAs.</p>
-
-          <ul class="features small">
-            <li><strong>Problem:</strong> Traditional RWAs depend on off-chain checks, slow updates, and manual intervention.</li>
-            <li><strong>Rialo solution:</strong> Native connectivity to registries, feeds, bank rails, rating agencies; event-driven programs that react automatically.</li>
-            <li><strong>Key benefits:</strong> Automation, privacy & identity, real-world reactivity, sub-second speed, and horizontal scale.</li>
-          </ul>
-
-          <h3 style="margin-top:12px">Example use-cases</h3>
-          <div class="small muted">
-            <ul>
-              <li>Debt & credit: bonds repricing to CPI and live auction updates.</li>
-              <li>Insurance & risk: flight-delay or parametric insurance settled instantly from public feeds.</li>
-              <li>Real estate: REIT yields updating from property management APIs.</li>
-              <li>Commodities & trade: warehouse receipts tied to GPS/inspection data for instant financing.</li>
-            </ul>
-          </div>
+    <h1>Rialo Makes Real World Assets Real Quiz</h1>
+    
+    <div class="disclaimer">
+        This quiz is for fun only!
+    </div>
+    
+    <div class="quiz-container">
+        <div id="score" class="score">
+            <div class="obtained" id="obtainedScore"></div>
+            <div class="total">out of 6</div>
+            <div class="grade" id="grade"></div>
         </div>
-
-        <div class="card" style="margin-top:14px">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <h2 style="margin:0">Quizzes — Topic: <em>Rialo Makes Real-World Assets Real</em></h2>
-            <div class="controls">
-              <button id="showAll">Show all answers</button>
-              <button id="hideAll" class="secondary">Hide answers</button>
+        
+        <form id="quizForm">
+            <div class="question">
+                <h3>Quiz 1 — What Problem Do RWAs Have Today?</h3>
+                <p>Q: What is one major issue with today’s tokenized real-world assets (RWAs)?</p>
+                <ul class="options">
+                    <li>
+                        <label>
+                            <input type="radio" id="q1a" name="q1" value="A">
+                            A) They operate fully automated
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q1b" name="q1" value="B">
+                            B) They rely too much on off-chain verification
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q1c" name="q1" value="C">
+                            C) They update instantly
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q1d" name="q1" value="D">
+                            D) They are always priced in real-time
+                        </label>
+                    </li>
+                </ul>
             </div>
-          </div>
-
-          <div class="quiz-list" id="quizList" style="margin-top:12px">
-
-            <!-- Quiz 1 -->
-            <div class="quiz" data-answer="B">
-              <div class="q">1. What is one major issue with today’s tokenized real-world assets (RWAs)?</div>
-              <div class="choices">
-                <div class="choice">A) They operate fully automated</div>
-                <div class="choice">B) They rely too much on off-chain verification</div>
-                <div class="choice">C) They update instantly</div>
-                <div class="choice">D) They are always priced in real-time</div>
-              </div>
-              <div class="answer"><strong>Answer:</strong> B — They rely too much on off-chain verification.</div>
+            
+            <div class="question">
+                <h3>Quiz 2 — What Makes Rialo Different?</h3>
+                <p>Q: How does Rialo make RWAs behave like real real-world assets?</p>
+                <ul class="options">
+                    <li>
+                        <label>
+                            <input type="radio" id="q2a" name="q2" value="A">
+                            A) By keeping assets static
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q2b" name="q2" value="B">
+                            B) By removing data feeds
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q2c" name="q2" value="C">
+                            C) By connecting on-chain programs directly to live real-world data
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q2d" name="q2" value="D">
+                            D) By slowing down settlement
+                        </label>
+                    </li>
+                </ul>
             </div>
-
-            <!-- Quiz 2 -->
-            <div class="quiz" data-answer="C">
-              <div class="q">2. How does Rialo make RWAs behave like real real-world assets?</div>
-              <div class="choices">
-                <div class="choice">A) By keeping assets static</div>
-                <div class="choice">B) By removing data feeds</div>
-                <div class="choice">C) By connecting on-chain programs directly to live real-world data</div>
-                <div class="choice">D) By slowing down settlement</div>
-              </div>
-              <div class="answer"><strong>Answer:</strong> C — Rialo connects RWAs to live real-world data so they can react instantly.</div>
+            
+            <div class="question">
+                <h3>Quiz 3 — Real-World Reactivity</h3>
+                <p>Q: On Rialo, what does “event-driven automation” mean?</p>
+                <ul class="options">
+                    <li>
+                        <label>
+                            <input type="radio" id="q3a" name="q3" value="A">
+                            A) Humans must manually issue updates
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q3b" name="q3" value="B">
+                            B) Programs wake, react, and execute automatically when conditions change
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q3c" name="q3" value="C">
+                            C) Markets wait for daily price updates
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q3d" name="q3" value="D">
+                            D) Data feeds are updated once a month
+                        </label>
+                    </li>
+                </ul>
             </div>
-
-            <!-- Quiz 3 -->
-            <div class="quiz" data-answer="B">
-              <div class="q">3. What does “event-driven automation” mean on Rialo?</div>
-              <div class="choices">
-                <div class="choice">A) Humans must manually issue updates</div>
-                <div class="choice">B) Programs wake, react, and execute automatically when conditions change</div>
-                <div class="choice">C) Markets wait for daily price updates</div>
-                <div class="choice">D) Data feeds are updated once a month</div>
-              </div>
-              <div class="answer"><strong>Answer:</strong> B — Programs automatically act when real-world conditions change.</div>
+            
+            <div class="question">
+                <h3>Quiz 4 — Real-World Identity & Privacy</h3>
+                <p>Q: Why is privacy and identity important for RWAs on Rialo?</p>
+                <ul class="options">
+                    <li>
+                        <label>
+                            <input type="radio" id="q4a" name="q4" value="A">
+                            A) To hide all activity forever
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q4b" name="q4" value="B">
+                            B) To allow crypto users to avoid KYC
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q4c" name="q4" value="C">
+                            C) To enable compliant ownership and confidential execution
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q4d" name="q4" value="D">
+                            D) To prevent any on-chain enforcement
+                        </label>
+                    </li>
+                </ul>
             </div>
-
-            <!-- Quiz 4 -->
-            <div class="quiz" data-answer="C">
-              <div class="q">4. Why is privacy and identity important for RWAs on Rialo?</div>
-              <div class="choices">
-                <div class="choice">A) To hide all activity forever</div>
-                <div class="choice">B) To allow crypto users to avoid KYC</div>
-                <div class="choice">C) To enable compliant ownership and confidential execution</div>
-                <div class="choice">D) To prevent any on-chain enforcement</div>
-              </div>
-              <div class="answer"><strong>Answer:</strong> C — Rialo supports compliant, confidential ownership and execution.</div>
+            
+            <div class="question">
+                <h3>Quiz 5 — Use Case Example</h3>
+                <p>Q: Which of the following is a unique use case enabled by Rialo?</p>
+                <ul class="options">
+                    <li>
+                        <label>
+                            <input type="radio" id="q5a" name="q5" value="A">
+                            A) Tokenized assets that require manual rebalancing every month
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q5b" name="q5" value="B">
+                            B) Flight delay insurance that settles instantly from public data feeds
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q5c" name="q5" value="C">
+                            C) Real estate tokens that never update rental income
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q5d" name="q5" value="D">
+                            D) Commodity baskets that never react to price movements
+                        </label>
+                    </li>
+                </ul>
             </div>
-
-            <!-- Quiz 5 -->
-            <div class="quiz" data-answer="B">
-              <div class="q">5. Which of the following is a unique use case enabled by Rialo?</div>
-              <div class="choices">
-                <div class="choice">A) Tokenized assets that require manual rebalancing every month</div>
-                <div class="choice">B) Flight delay insurance that settles instantly from public data feeds</div>
-                <div class="choice">C) Real estate tokens that never update rental income</div>
-                <div class="choice">D) Commodity baskets that never react to price movements</div>
-              </div>
-              <div class="answer"><strong>Answer:</strong> B — Rialo enables instant, automated settlement for parametric insurance.</div>
+            
+            <div class="question">
+                <h3>Quiz 6 — The Core Difference</h3>
+                <p>Q: What is the core difference between RWAs on Rialo and traditional tokenized assets?</p>
+                <ul class="options">
+                    <li>
+                        <label>
+                            <input type="radio" id="q6a" name="q6" value="A">
+                            A) Rialo assets stay static
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q6b" name="q6" value="B">
+                            B) Rialo assets are “living” and react to real-world events in real time
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q6c" name="q6" value="C">
+                            C) Rialo removes on-chain execution
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" id="q6d" name="q6" value="D">
+                            D) Rialo only supports crypto-native assets
+                        </label>
+                    </li>
+                </ul>
             </div>
-
-            <!-- Quiz 6 -->
-            <div class="quiz" data-answer="B">
-              <div class="q">6. What is the core difference between RWAs on Rialo and traditional tokenized assets?</div>
-              <div class="choices">
-                <div class="choice">A) Rialo assets stay static</div>
-                <div class="choice">B) Rialo assets are “living” and react to real-world events in real time</div>
-                <div class="choice">C) Rialo removes on-chain execution</div>
-                <div class="choice">D) Rialo only supports crypto-native assets</div>
-              </div>
-              <div class="answer"><strong>Answer:</strong> B — RWAs on Rialo are “living assets” that adapt in real time.</div>
-            </div>
-
-          </div>
-
-          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-            <button id="toggleAnswers">Show answers for current question</button>
-            <button id="downloadBtn" class="secondary">Download HTML</button>
-            <div class="pill small muted">Topic: <strong>Rialo Makes Real-World Assets Real</strong></div>
-
-          <!-- Score Button -->
-          <div style="margin-top:16px">
-            <button id="scoreBtn">Calculate Score</button>
-            <div id="scoreResult" class="pill small muted" style="margin-top:8px;display:none"></div>
-          </div>
-
+            
+            <button type="button" id="submitBtn" onclick="submitQuiz()">Submit Quiz</button>
+        </form>
+        
+        <div id="results" class="results">
+            <div id="feedback"></div>
         </div>
-      </main>
-
-      <aside>
-        <div class="card small">
-          <h3 style="margin-top:0">How to use</h3>
-          <ol style="padding-left:18px;color:var(--muted)">
-            <li>Use this single file as <code>index.html</code> in a GitHub Pages repo.</li>
-            <li>Click <strong>Show all answers</strong> to reveal answers for everyone.</li>
-            <li>Use <strong>Download</strong> to save the page locally or copy code to your repo.</li>
-          </ol>
-          <div style="margin-top:8px">
-            <div class="small muted">Want Urdu or Discord-ready formatting? Hit the button below.</div>
-            <div style="margin-top:8px;display:flex;gap:8px">
-              <button id="toUrdu" class="secondary">Create Urdu version</button>
-              <button id="discord" class="secondary">Discord message format</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="card small" style="margin-top:12px">
-          <h3 style="margin:0 0 8px 0">Deployment</h3>
-          <ol style="padding-left:18px;color:var(--muted)">
-            <li>Create a new GitHub repo (public or private).</li>
-            <li>Add this file as <code>index.html</code> in the repository root.</li>
-            <li>Enable GitHub Pages from the repo settings (branch: main / root).</li>
-            <li>The site will be available at <code>https://&lt;your-username&gt;.github.io/&lt;repo-name&gt;/</code>.</li>
-          </ol>
-        </div>
-      </aside>
     </div>
 
-    <footer class="small muted">Made for community learning • Topic: <em>Rialo Makes Real-World Assets Real</em></footer>
-  </div>
+    <script>
+        const questions = {
+            q1: { correct: 'B' },
+            q2: { correct: 'C' },
+            q3: { correct: 'B' },
+            q4: { correct: 'C' },
+            q5: { correct: 'B' },
+            q6: { correct: 'B' }
+        };
 
-  <script>
-    // Helpers
-    function showAll(show = true){
-      document.querySelectorAll('.answer').forEach(a => a.style.display = show ? 'block' : 'none');
-    }
+        function getGrade(score) {
+            if (score === 6) return 'A+';
+            if (score >= 5) return 'A';
+            if (score >= 4) return 'B';
+            if (score >= 3) return 'C';
+            if (score >= 2) return 'D';
+            return 'F';
+        }
 
-    document.getElementById('showAll').addEventListener('click',() => showAll(true));
-    document.getElementById('hideAll').addEventListener('click',() => showAll(false));
+        function submitQuiz() {
+            const form = document.getElementById('quizForm');
+            const scoreDiv = document.getElementById('score');
+            const obtainedDiv = document.getElementById('obtainedScore');
+            const gradeDiv = document.getElementById('grade');
+            const results = document.getElementById('results');
+            const submitBtn = document.getElementById('submitBtn');
+            const feedbackDiv = document.getElementById('feedback');
 
-    // Toggle per-question — finds the first quiz in viewport
-    document.getElementById('toggleAnswers').addEventListener('click', ()=>{
-      // try to find the first quiz with hidden answer
-      const quizzes = Array.from(document.querySelectorAll('.quiz'));
-      let target = quizzes.find(q => q.querySelector('.answer').style.display === 'none');
-      if(!target) target = quizzes[0];
-      const ans = target.querySelector('.answer');
-      ans.style.display = (ans.style.display === 'none' || ans.style.display === '') ? 'block' : 'none';
-      ans.scrollIntoView({behavior:'smooth',block:'center'});
-    });
+            // Check if all questions are answered
+            let allAnswered = true;
+            let score = 0;
+            for (let i = 1; i <= 6; i++) {
+                const selected = form.querySelector(`input[name="q${i}"]:checked`);
+                if (!selected) {
+                    allAnswered = false;
+                    break;
+                }
+                if (selected.value === questions[`q${i}`].correct) {
+                    score++;
+                }
+            }
+            if (!allAnswered) {
+                alert('Please answer all questions before submitting! You can choose any answer for each question.');
+                return;
+            }
 
-    // Download current HTML
-    document.getElementById('downloadBtn').addEventListener('click', ()=>{
-      const html = '<!doctype html>\n' + document.documentElement.outerHTML;
-      const blob = new Blob([html], {type: 'text/html'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'index.html'; document.body.appendChild(a); a.click(); a.remove();
-      URL.revokeObjectURL(url);
-    });
+            // Show score and grade
+            obtainedDiv.textContent = `Obtained Score: ${score}`;
+            gradeDiv.textContent = `Grade: ${getGrade(score)}`;
+            scoreDiv.style.display = 'block';
 
-    // Quick stubs for Urdu/Discord exports (you can expand later)
-    document.getElementById('toUrdu').addEventListener('click', ()=>alert('I can generate an Urdu version — tell me to proceed.'));
-    document.getElementById('discord').addEventListener('click', ()=>alert('I can format this for Discord — tell me which channel or style.'));
+            // Reveal answers directly on the quiz
+            for (let i = 1; i <= 6; i++) {
+                const qKey = `q${i}`;
+                const correctValue = questions[qKey].correct;
+                const selected = form.querySelector(`input[name="${qKey}"]:checked`);
+                const selectedValue = selected ? selected.value : null;
+                const isCorrect = selectedValue === correctValue;
 
-    // Accessibility: allow keyboard toggles
-    document.addEventListener('keydown', (e)=>{
-      if(e.key === 'a' && e.ctrlKey) showAll(true);
-      if(e.key === 'h' && e.ctrlKey) showAll(false);
-    });
-    // Choice selection logic
-  document.querySelectorAll('.quiz .choice').forEach(choice => {
-    choice.addEventListener('click', () => {
-      const quiz = choice.closest('.quiz');
-      quiz.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
-      choice.classList.add('selected');
-      quiz.dataset.selected = choice.textContent.trim().charAt(0);
-    });
-  });
+                // Find and style the correct option
+                const correctInput = form.querySelector(`input[name="${qKey}"][value="${correctValue}"]`);
+                const correctLi = correctInput.closest('li');
+                correctLi.classList.add('correct', 'revealed');
 
-  // Score calculation
-  document.getElementById('scoreBtn').addEventListener('click', () => {
-    const quizzes = document.querySelectorAll('.quiz');
-    let score = 0;
-    quizzes.forEach(q => {
-      if (q.dataset.selected === q.dataset.answer) score++;
-    });
-    const result = document.getElementById('scoreResult');
-    result.style.display = 'inline-block';
-    result.textContent = `Your Score: ${score} / ${quizzes.length}`;
-    result.scrollIntoView({behavior:'smooth',block:'center'});
-  });
-</script>
+                // Add indicator to correct
+                let correctIndicator = correctLi.querySelector('.indicator');
+                if (!correctIndicator) {
+                    correctIndicator = document.createElement('span');
+                    correctIndicator.className = 'indicator correct';
+                    correctIndicator.textContent = ' ✓ Correct';
+                    correctInput.parentElement.appendChild(correctIndicator);
+                }
+
+                // Style and indicate the selected option if different from correct
+                if (selectedValue && selectedValue !== correctValue) {
+                    const selectedLi = selected.closest('li');
+                    selectedLi.classList.add('selected-wrong', 'revealed');
+
+                    let selIndicator = selectedLi.querySelector('.indicator');
+                    if (!selIndicator) {
+                        selIndicator = document.createElement('span');
+                        selIndicator.className = 'indicator incorrect';
+                        selIndicator.textContent = ' ✗ Incorrect';
+                        selected.parentElement.appendChild(selIndicator);
+                    }
+                } else if (selectedValue === correctValue) {
+                    // For correct selection, enhance the existing correct indicator if needed
+                    const selectedLi = selected.closest('li');
+                    selectedLi.classList.add('selected-correct', 'revealed');
+                }
+            }
+
+            // Disable inputs and button
+            const inputs = form.querySelectorAll('input[type="radio"]');
+            inputs.forEach(input => input.disabled = true);
+            submitBtn.classList.add('submitted');
+            submitBtn.textContent = 'Quiz Submitted!';
+
+            // Show general feedback
+            feedbackDiv.innerHTML = '<h4>Great job! Keep learning about Rialo and RWAs. Scroll up to review your Answers.</h4>';
+            results.style.display = 'block';
+
+            // Scroll to top to show score and quiz
+            document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
