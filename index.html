@@ -161,10 +161,14 @@
             <button id="toggleAnswers">Show answers for current question</button>
             <button id="downloadBtn" class="secondary">Download HTML</button>
             <div class="pill small muted">Topic: <strong>Rialo Makes Real-World Assets Real</strong></div>
+
+          <!-- Score Button -->
+          <div style="margin-top:16px">
+            <button id="scoreBtn">Calculate Score</button>
+            <div id="scoreResult" class="pill small muted" style="margin-top:8px;display:none"></div>
           </div>
 
         </div>
-
       </main>
 
       <aside>
@@ -238,6 +242,28 @@
       if(e.key === 'a' && e.ctrlKey) showAll(true);
       if(e.key === 'h' && e.ctrlKey) showAll(false);
     });
-  </script>
+    // Choice selection logic
+  document.querySelectorAll('.quiz .choice').forEach(choice => {
+    choice.addEventListener('click', () => {
+      const quiz = choice.closest('.quiz');
+      quiz.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+      choice.classList.add('selected');
+      quiz.dataset.selected = choice.textContent.trim().charAt(0);
+    });
+  });
+
+  // Score calculation
+  document.getElementById('scoreBtn').addEventListener('click', () => {
+    const quizzes = document.querySelectorAll('.quiz');
+    let score = 0;
+    quizzes.forEach(q => {
+      if (q.dataset.selected === q.dataset.answer) score++;
+    });
+    const result = document.getElementById('scoreResult');
+    result.style.display = 'inline-block';
+    result.textContent = `Your Score: ${score} / ${quizzes.length}`;
+    result.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+</script>
 </body>
 </html>
