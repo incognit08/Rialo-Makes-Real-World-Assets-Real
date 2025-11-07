@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rialo — Real-World Assets (RWAs) Demo</title>
+  <meta name="description" content="Rialo Makes Real-World Assets Real — article summary and 6 quizzes with answers. Perfect for GitHub Pages." />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#94a3b8;--accent:#7c3aed;--glass: rgba(255,255,255,0.04);}    
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;margin:0;background:linear-gradient(180deg,#071024 0%, #07162a 100%);color:#e6eef8;line-height:1.5}
+    .container{max-width:980px;margin:36px auto;padding:24px}
+    header{display:flex;align-items:center;gap:16px}
+    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#3b82f6);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;box-shadow:0 6px 18px rgba(0,0,0,0.6)}
+    h1{font-size:20px;margin:0}
+    p.lead{color:var(--muted);margin-top:8px}
+
+    .card{background:var(--card);padding:18px;border-radius:12px;margin-top:18px;box-shadow:0 6px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+
+    .article h2{margin-top:0}
+    ul.features{padding-left:18px;color:var(--muted)}
+
+    .quiz-list{display:grid;gap:12px}
+    .quiz{border-radius:10px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border:1px solid rgba(255,255,255,0.02)}
+    .q{font-weight:600}
+    .choices{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px}
+    .choice{background:var(--glass);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:default}
+    .answer{margin-top:10px;display:none;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);color:#cfe9ff}
+    .controls{display:flex;gap:8px;flex-wrap:wrap}
+    button{background:var(--accent);border:0;padding:8px 12px;border-radius:8px;color:white;cursor:pointer;font-weight:600}
+    button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .small{font-size:13px}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.02)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">R</div>
+      <div>
+        <h1>Rialo — Real-World Assets (RWAs) Demo</h1>
+        <p class="lead">Article: <em>Rialo Makes Real-World Assets Real</em> • Quick summary + 6 interactive quizzes (answers hidden by default) — ready for GitHub Pages.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main class="article">
+        <div class="card">
+          <h2>At-a-glance summary</h2>
+          <p class="muted small">Rialo aims to make tokenized real-world assets truly "living" by connecting on-chain programs to verifiable, live off-chain data, enabling instant automation, privacy-compliant identity, and sub-second settlement for RWAs.</p>
+
+          <ul class="features small">
+            <li><strong>Problem:</strong> Traditional RWAs depend on off-chain checks, slow updates, and manual intervention.</li>
+            <li><strong>Rialo solution:</strong> Native connectivity to registries, feeds, bank rails, rating agencies; event-driven programs that react automatically.</li>
+            <li><strong>Key benefits:</strong> Automation, privacy & identity, real-world reactivity, sub-second speed, and horizontal scale.</li>
+          </ul>
+
+          <h3 style="margin-top:12px">Example use-cases</h3>
+          <div class="small muted">
+            <ul>
+              <li>Debt & credit: bonds repricing to CPI and live auction updates.</li>
+              <li>Insurance & risk: flight-delay or parametric insurance settled instantly from public feeds.</li>
+              <li>Real estate: REIT yields updating from property management APIs.</li>
+              <li>Commodities & trade: warehouse receipts tied to GPS/inspection data for instant financing.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h2 style="margin:0">Quizzes — Topic: <em>Rialo Makes Real-World Assets Real</em></h2>
+            <div class="controls">
+              <button id="showAll">Show all answers</button>
+              <button id="hideAll" class="secondary">Hide answers</button>
+            </div>
+          </div>
+
+          <div class="quiz-list" id="quizList" style="margin-top:12px">
+
+            <!-- Quiz 1 -->
+            <div class="quiz" data-answer="B">
+              <div class="q">1. What is one major issue with today’s tokenized real-world assets (RWAs)?</div>
+              <div class="choices">
+                <div class="choice">A) They operate fully automated</div>
+                <div class="choice">B) They rely too much on off-chain verification</div>
+                <div class="choice">C) They update instantly</div>
+                <div class="choice">D) They are always priced in real-time</div>
+              </div>
+              <div class="answer"><strong>Answer:</strong> B — They rely too much on off-chain verification.</div>
+            </div>
+
+            <!-- Quiz 2 -->
+            <div class="quiz" data-answer="C">
+              <div class="q">2. How does Rialo make RWAs behave like real real-world assets?</div>
+              <div class="choices">
+                <div class="choice">A) By keeping assets static</div>
+                <div class="choice">B) By removing data feeds</div>
+                <div class="choice">C) By connecting on-chain programs directly to live real-world data</div>
+                <div class="choice">D) By slowing down settlement</div>
+              </div>
+              <div class="answer"><strong>Answer:</strong> C — Rialo connects RWAs to live real-world data so they can react instantly.</div>
+            </div>
+
+            <!-- Quiz 3 -->
+            <div class="quiz" data-answer="B">
+              <div class="q">3. What does “event-driven automation” mean on Rialo?</div>
+              <div class="choices">
+                <div class="choice">A) Humans must manually issue updates</div>
+                <div class="choice">B) Programs wake, react, and execute automatically when conditions change</div>
+                <div class="choice">C) Markets wait for daily price updates</div>
+                <div class="choice">D) Data feeds are updated once a month</div>
+              </div>
+              <div class="answer"><strong>Answer:</strong> B — Programs automatically act when real-world conditions change.</div>
+            </div>
+
+            <!-- Quiz 4 -->
+            <div class="quiz" data-answer="C">
+              <div class="q">4. Why is privacy and identity important for RWAs on Rialo?</div>
+              <div class="choices">
+                <div class="choice">A) To hide all activity forever</div>
+                <div class="choice">B) To allow crypto users to avoid KYC</div>
+                <div class="choice">C) To enable compliant ownership and confidential execution</div>
+                <div class="choice">D) To prevent any on-chain enforcement</div>
+              </div>
+              <div class="answer"><strong>Answer:</strong> C — Rialo supports compliant, confidential ownership and execution.</div>
+            </div>
+
+            <!-- Quiz 5 -->
+            <div class="quiz" data-answer="B">
+              <div class="q">5. Which of the following is a unique use case enabled by Rialo?</div>
+              <div class="choices">
+                <div class="choice">A) Tokenized assets that require manual rebalancing every month</div>
+                <div class="choice">B) Flight delay insurance that settles instantly from public data feeds</div>
+                <div class="choice">C) Real estate tokens that never update rental income</div>
+                <div class="choice">D) Commodity baskets that never react to price movements</div>
+              </div>
+              <div class="answer"><strong>Answer:</strong> B — Rialo enables instant, automated settlement for parametric insurance.</div>
+            </div>
+
+            <!-- Quiz 6 -->
+            <div class="quiz" data-answer="B">
+              <div class="q">6. What is the core difference between RWAs on Rialo and traditional tokenized assets?</div>
+              <div class="choices">
+                <div class="choice">A) Rialo assets stay static</div>
+                <div class="choice">B) Rialo assets are “living” and react to real-world events in real time</div>
+                <div class="choice">C) Rialo removes on-chain execution</div>
+                <div class="choice">D) Rialo only supports crypto-native assets</div>
+              </div>
+              <div class="answer"><strong>Answer:</strong> B — RWAs on Rialo are “living assets” that adapt in real time.</div>
+            </div>
+
+          </div>
+
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <button id="toggleAnswers">Show answers for current question</button>
+            <button id="downloadBtn" class="secondary">Download HTML</button>
+            <div class="pill small muted">Topic: <strong>Rialo Makes Real-World Assets Real</strong></div>
+          </div>
+
+        </div>
+
+      </main>
+
+      <aside>
+        <div class="card small">
+          <h3 style="margin-top:0">How to use</h3>
+          <ol style="padding-left:18px;color:var(--muted)">
+            <li>Use this single file as <code>index.html</code> in a GitHub Pages repo.</li>
+            <li>Click <strong>Show all answers</strong> to reveal answers for everyone.</li>
+            <li>Use <strong>Download</strong> to save the page locally or copy code to your repo.</li>
+          </ol>
+          <div style="margin-top:8px">
+            <div class="small muted">Want Urdu or Discord-ready formatting? Hit the button below.</div>
+            <div style="margin-top:8px;display:flex;gap:8px">
+              <button id="toUrdu" class="secondary">Create Urdu version</button>
+              <button id="discord" class="secondary">Discord message format</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card small" style="margin-top:12px">
+          <h3 style="margin:0 0 8px 0">Deployment</h3>
+          <ol style="padding-left:18px;color:var(--muted)">
+            <li>Create a new GitHub repo (public or private).</li>
+            <li>Add this file as <code>index.html</code> in the repository root.</li>
+            <li>Enable GitHub Pages from the repo settings (branch: main / root).</li>
+            <li>The site will be available at <code>https://&lt;your-username&gt;.github.io/&lt;repo-name&gt;/</code>.</li>
+          </ol>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="small muted">Made for community learning • Topic: <em>Rialo Makes Real-World Assets Real</em></footer>
+  </div>
+
+  <script>
+    // Helpers
+    function showAll(show = true){
+      document.querySelectorAll('.answer').forEach(a => a.style.display = show ? 'block' : 'none');
+    }
+
+    document.getElementById('showAll').addEventListener('click',() => showAll(true));
+    document.getElementById('hideAll').addEventListener('click',() => showAll(false));
+
+    // Toggle per-question — finds the first quiz in viewport
+    document.getElementById('toggleAnswers').addEventListener('click', ()=>{
+      // try to find the first quiz with hidden answer
+      const quizzes = Array.from(document.querySelectorAll('.quiz'));
+      let target = quizzes.find(q => q.querySelector('.answer').style.display === 'none');
+      if(!target) target = quizzes[0];
+      const ans = target.querySelector('.answer');
+      ans.style.display = (ans.style.display === 'none' || ans.style.display === '') ? 'block' : 'none';
+      ans.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+
+    // Download current HTML
+    document.getElementById('downloadBtn').addEventListener('click', ()=>{
+      const html = '<!doctype html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([html], {type: 'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'index.html'; document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // Quick stubs for Urdu/Discord exports (you can expand later)
+    document.getElementById('toUrdu').addEventListener('click', ()=>alert('I can generate an Urdu version — tell me to proceed.'));
+    document.getElementById('discord').addEventListener('click', ()=>alert('I can format this for Discord — tell me which channel or style.'));
+
+    // Accessibility: allow keyboard toggles
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'a' && e.ctrlKey) showAll(true);
+      if(e.key === 'h' && e.ctrlKey) showAll(false);
+    });
+  </script>
+</body>
+</html>
